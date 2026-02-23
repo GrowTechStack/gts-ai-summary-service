@@ -1,0 +1,10 @@
+server:
+  port: 29998
+
+spring:
+  kafka:
+    bootstrap-servers: localhost:9092
+
+logging:
+  level:
+    com.gts.aisummary: debug

@@ -26,7 +26,3 @@ CLAUDE.md
 GEMINI.md
 plan.md
 prompt.txt
-
-### Secrets ###
-application-dev.yml
-application-prod.yml

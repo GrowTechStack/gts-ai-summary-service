@@ -2,6 +2,10 @@ server:
   port: 29998
 
 spring:
+  ai:
+    openai:
+      api-key: ${AI_API_KEY}
+
   kafka:
     bootstrap-servers: localhost:9092
 

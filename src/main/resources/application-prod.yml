@@ -6,6 +6,7 @@ spring:
     openai:
       api-key: ${AI_API_KEY}
 
+
   kafka:
     bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS}
 

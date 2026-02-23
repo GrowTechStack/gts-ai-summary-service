@@ -1,0 +1,41 @@
+server:
+  port: 29998
+
+spring:
+  application:
+    name: ai-summary-service
+
+  ai:
+    openai:
+      api-key: ${AI_API_KEY}
+      base-url: https://api.groq.com/openai
+      chat:
+        options:
+          model: "llama-3.1-8b-instant"
+          temperature: 0.3
+          stream-usage: false
+    retry:
+      max-attempts: 1
+
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: ai-summary-service
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      auto-offset-reset: earliest
+      properties:
+        spring.json.trusted.packages: "com.gts.aisummary.global.kafka.dto"
+        spring.json.use.type.headers: false
+        spring.json.value.default.type: "com.gts.aisummary.global.kafka.dto.SummaryRequestMessage"
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
+springdoc:
+  swagger-ui:
+    try-it-out-enabled: true
+
+logging:
+  level:
+    com.gts.aisummary: debug

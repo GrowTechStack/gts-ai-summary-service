@@ -39,3 +39,6 @@ CLAUDE.md
 GEMINI.md
 plan.md
 prompt.txt
+
+### Secrets ###
+.env

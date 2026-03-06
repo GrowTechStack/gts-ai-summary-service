@@ -19,11 +19,12 @@ public class SummaryRequestConsumer {
     private final SummaryService summaryService;
     private final SummaryResultProducer summaryResultProducer;
 
-    @KafkaListener(topics = "content-summary-request", groupId = "ai-summary-service")
+    @KafkaListener(id = "summaryConsumer", topics = "content-summary-request", groupId = "ai-summary-service")
     public void consume(SummaryRequestMessage message) {
-        log.debug("[SummaryRequestConsumer] 요약 요청 수신: contentId={}, title={}", message.contentId(), message.title());
+        log.info("[SummaryRequestConsumer] 요약 요청 수신: contentId={}, title={}", message.contentId(), message.title());
         try {
             SummaryResponse response = summaryService.summarize(new SummaryRequest(message.title(), message.content()));
+            log.info("[SummaryRequestConsumer] 요약 완료: contentId={}", message.contentId());
             summaryResultProducer.send(new SummaryResultMessage(message.contentId(), response.summary()));
         } catch (RateLimitException e) {
             throw e;

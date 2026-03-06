@@ -1,6 +1,13 @@
 server:
   port: 29998
 
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URL:http://eureka:8761/eureka/}
+  instance:
+    prefer-ip-address: true
+
 spring:
   ai:
     openai:

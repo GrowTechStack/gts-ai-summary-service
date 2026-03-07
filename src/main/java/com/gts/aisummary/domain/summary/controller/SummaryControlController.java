@@ -1,5 +1,6 @@
 package com.gts.aisummary.domain.summary.controller;
 
+import com.gts.aisummary.global.common.response.ApiResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.config.KafkaListenerEndpointRegistry;
 import org.springframework.kafka.listener.MessageListenerContainer;
@@ -21,27 +22,27 @@ public class SummaryControlController {
     private final KafkaListenerEndpointRegistry registry;
 
     @GetMapping("/status")
-    public Map<String, Boolean> getStatus() {
+    public ApiResult<Map<String, Boolean>> getStatus() {
         MessageListenerContainer container = registry.getListenerContainer("summaryConsumer");
         boolean running = container != null && container.isRunning() && !container.isPauseRequested();
-        return Map.of("running", running);
+        return ApiResult.success(Map.of("running", running));
     }
 
     @PostMapping("/stop")
-    public Map<String, Boolean> stop() {
+    public ApiResult<Map<String, Boolean>> stop() {
         MessageListenerContainer container = registry.getListenerContainer("summaryConsumer");
         if (container != null) {
             container.pause();
         }
-        return Map.of("running", false);
+        return ApiResult.success(Map.of("running", false));
     }
 
     @PostMapping("/start")
-    public Map<String, Boolean> start() {
+    public ApiResult<Map<String, Boolean>> start() {
         MessageListenerContainer container = registry.getListenerContainer("summaryConsumer");
         if (container != null) {
             container.resume();
         }
-        return Map.of("running", true);
+        return ApiResult.success(Map.of("running", true));
     }
 }
